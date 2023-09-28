@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsFillPencilFill } from 'react-icons/bs';
+import { login, logout, onUserStateChange } from '../api/firebase';
+import { User } from 'firebase/auth';
 export default function Navbar() {
+  const [user, setUser] = useState<User | null>(null);
+
+  const handleLogin = () => {
+    login().then((user) => {
+      setUser(user);
+    });
+  };
+
+  const handleLogout = () => {
+    logout().then(setUser);
+  };
+
+  useEffect(() => {
+    onUserStateChange((user: any) => {
+      setUser(user);
+    });
+  }, []);
+
   return (
     <header className='flex justify-between border-b border-gray-300 p-2'>
       <nav className='flex items-end gap-4 font-semibold'>
@@ -14,7 +34,8 @@ export default function Navbar() {
         <Link to='/books/new' className='text-xl'>
           <BsFillPencilFill />
         </Link>
-        <button>Login</button>
+        {!user && <button onClick={handleLogin}>Login</button>}
+        {user && <button onClick={handleLogout}>Logout</button>}
       </nav>
     </header>
   );

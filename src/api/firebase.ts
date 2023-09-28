@@ -32,7 +32,7 @@ export async function logout() {
   return signOut(auth).then(() => null);
 }
 
-export function onUserStateChange(callback: any) {
+export function onUserStateChange(callback: Function) {
   onAuthStateChanged(auth, (user) => {
     callback(user);
   });

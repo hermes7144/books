@@ -5,7 +5,11 @@ import { login, logout, onUserStateChange } from '../api/firebase';
 import { User } from 'firebase/auth';
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
-
+  useEffect(() => {
+    onUserStateChange((user: User) => {
+      setUser(user);
+    });
+  }, []);
   const handleLogin = () => {
     login().then((user) => {
       setUser(user);
@@ -15,12 +19,6 @@ export default function Navbar() {
   const handleLogout = () => {
     logout().then(setUser);
   };
-
-  useEffect(() => {
-    onUserStateChange((user: any) => {
-      setUser(user);
-    });
-  }, []);
 
   return (
     <header className='flex justify-between border-b border-gray-300 p-2'>

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -15,6 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+export const fireStore = getFirestore(app);
 
 export async function login() {
   return signInWithPopup(auth, provider)
@@ -35,5 +37,37 @@ export async function logout() {
 export function onUserStateChange(callback: Function) {
   onAuthStateChanged(auth, (user) => {
     callback(user);
+    setUserInfo(user);
+  });
+}
+
+export async function getUserInfo(uid) {
+  const res = await getDoc(doc(fireStore, 'users', uid));
+  return res;
+}
+
+export async function setUserInfo(user: any) {
+  try {
+    const res = await getDoc(doc(fireStore, 'users', user.uid));
+
+    if (!res.exists()) {
+      await setDoc(doc(fireStore, 'users', user.uid), {
+        uid: user.uid,
+        displayName: user.displayName,
+        email: user.email,
+      });
+      await setDoc(doc(fireStore, 'userChats', user.uid), {});
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function setNeighborhood2(user, neighborhood: string) {
+  return setDoc(doc(fireStore, 'users', user.uid), {
+    uid: user.uid,
+    displayName: user.displayName,
+    email: user.email,
+    neighborhood,
   });
 }

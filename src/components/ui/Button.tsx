@@ -2,13 +2,13 @@ import React from 'react';
 
 type ButtonProps = {
   text: string;
-  onClick?: () => void;
+  onClick: () => void;
   disabled?: boolean;
 };
 
-export default function Button({ text, onClick, disabled }: ButtonProps) {
+export default function Button({ text, onClick }: ButtonProps) {
   return (
-    <button className='bg-primary text-white py-2 px-4 rounded-sm  hover:brightness-110 flex-shrink-0' onClick={onClick} disabled={disabled}>
+    <button className='bg-primary text-white py-2 px-4 rounded-sm  hover:brightness-110 flex-shrink-0' onClick={onClick}>
       {text}
     </button>
   );

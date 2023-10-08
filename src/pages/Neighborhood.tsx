@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useGeoLocation } from '../hooks/useGeoLocation';
 import { useNavigate } from 'react-router-dom';
-import { onUserStateChange } from '../api/firebase';
 import Button from '../components/ui/Button';
+import { useAuthContext } from '../context/AuthContext';
+import { setNeighborhood2 } from '../api/firebase';
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -14,15 +15,15 @@ const geolocationOptions = {
 export default function Neighborhood() {
   const { location } = useGeoLocation(geolocationOptions);
   const navigate = useNavigate();
-
   const [neighborhood, setNeighborhood] = useState('');
-  const [position, setPosition] = useState({ lng: 0, lat: 0 });
+  const [position, setPosition] = useState({ lng: NaN, lat: NaN });
+  const { user } = useAuthContext();
 
   useEffect(() => {
     location && getNeighborhood();
 
     function getNeighborhood() {
-      if (position.lng === 0) setPosition({ lng: location?.longitude, lat: location?.latitude });
+      if (isNaN(position.lng)) setPosition({ lng: location?.longitude, lat: location?.latitude });
 
       const geocoder = new kakao.maps.services.Geocoder(); // 좌표 -> 주소로 변환해주는 객체
       const callback = function (result, status) {
@@ -36,6 +37,7 @@ export default function Neighborhood() {
   }, [location, position]);
 
   async function handleSubmit() {
+    await setNeighborhood2(user, neighborhood);
     navigate('/', { state: { status: 'success' } });
   }
 

@@ -1,7 +1,6 @@
 /*global kakao*/
 import { useRef, useState, useEffect } from 'react';
 import { Map, MapMarker, MapTypeControl } from 'react-kakao-maps-sdk';
-import useKakaoLoader from '../hooks/useKakaoLoader';
 import { useGeoLocation } from '../hooks/useGeoLocation';
 
 const geolocationOptions = {
@@ -13,7 +12,6 @@ const geolocationOptions = {
 // 주소-좌표 변환 객체를 생성합니다
 export default function Neighborhood() {
   const { kakao } = window;
-  useKakaoLoader();
   var geocoder = new kakao.maps.services.Geocoder();
   const mapRef = useRef<kakao.maps.Map>(null);
   const [info, setInfo] = useState<string>('');

@@ -4,7 +4,7 @@ import { login, logout, onUserStateChange } from '../api/firebase';
 import { User } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-export function AuthProvider({ children }) {
+export default function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<User | null>(null);
@@ -15,5 +15,5 @@ export function AuthProvider({ children }) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return <AuthContext.Provider value={{ user, uid: user && user.uid, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, uid: user && user.uid, login, logout, setUser }}>{children}</AuthContext.Provider>;
 }

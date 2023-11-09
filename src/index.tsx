@@ -9,6 +9,10 @@ import Home from './pages/Home';
 import Allbooks from './pages/Allbooks';
 import NewBook from './pages/NewBook';
 import Neighborhood from './pages/Neighborhood';
+import BookDetail from './pages/BookDetail';
+import ProtectedRoute from './pages/ProtectedRoute';
+import BookChats from './pages/BookChats';
+import BookChat from './pages/BookChat';
 
 const router = createBrowserRouter([
   {
@@ -18,13 +22,38 @@ const router = createBrowserRouter([
     children: [
       { index: true, path: '/', element: <Home /> },
       { path: '/books', element: <Allbooks /> },
+      { path: '/books/:id', element: <BookDetail /> },
       {
         path: '/books/new',
-        element: <NewBook />,
+        element: (
+          <ProtectedRoute>
+            <NewBook />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/neighborhood',
-        element: <Neighborhood />,
+        element: (
+          <ProtectedRoute>
+            <Neighborhood />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/chats/:id',
+        element: (
+          <ProtectedRoute>
+            <BookChats />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/chat/:id',
+        element: (
+          <ProtectedRoute>
+            <BookChat />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

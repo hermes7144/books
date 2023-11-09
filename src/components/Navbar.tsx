@@ -11,7 +11,7 @@ export default function Navbar() {
         <Link to='/' className='text-4xl text-primary'>
           동네책방
         </Link>
-        <Link to='/neighborhood'>동네인증</Link>
+        <Link to='/neighborhood'>{user?.neighborhood ? user.neighborhood : '동네인증'}</Link>
       </nav>
       <nav className='flex items-center gap-4 font-semibold'>
         <Link to='/books/new' className='text-xl'>

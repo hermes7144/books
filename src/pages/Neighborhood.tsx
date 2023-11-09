@@ -4,7 +4,7 @@ import { useGeoLocation } from '../hooks/useGeoLocation';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { useAuthContext } from '../context/AuthContext';
-import { setNeighborhood2 } from '../api/firebase';
+import { writeNeighborhood, onUserStateChange } from '../api/firebase';
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -17,7 +17,7 @@ export default function Neighborhood() {
   const navigate = useNavigate();
   const [neighborhood, setNeighborhood] = useState('');
   const [position, setPosition] = useState({ lng: NaN, lat: NaN });
-  const { user } = useAuthContext();
+  const { user, setUser } = useAuthContext();
 
   useEffect(() => {
     location && getNeighborhood();
@@ -37,7 +37,9 @@ export default function Neighborhood() {
   }, [location, position]);
 
   async function handleSubmit() {
-    await setNeighborhood2(user, neighborhood);
+    await writeNeighborhood(user, neighborhood);
+
+    onUserStateChange(setUser);
     navigate('/', { state: { status: 'success' } });
   }
 

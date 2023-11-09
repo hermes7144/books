@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { db } from '../api/firebase';
 import { v4 as uuid } from 'uuid';
-
 import { useAuthContext } from '../context/AuthContext';
 import { useChatContext } from '../context/ChatContext';
-import { useParams } from 'react-router-dom';
 import { Timestamp, arrayUnion, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { getChats } from '../api/firebase';
 
@@ -12,7 +10,6 @@ export default function Input() {
   const { user } = useAuthContext();
   const { data } = useChatContext();
   const [text, setText] = useState('');
-  const params = useParams();
 
   const handleOnKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -27,26 +24,6 @@ export default function Input() {
 
     if (!res.exists()) {
       await setDoc(doc(db, 'chats', data.chatId), { messages: [] });
-    }
-
-    if (!res.data()?.messages.length) {
-      await updateDoc(doc(db, 'userChats', user.uid), {
-        [data.chatId + '.userInfo']: {
-          uid: data.otherUser.uid,
-          displayName: data.otherUser.displayName,
-        },
-        [data.chatId + '.date']: serverTimestamp(),
-        [data.chatId + '.id']: params.id,
-      });
-
-      await updateDoc(doc(db, 'userChats', data.otherUser.uid), {
-        [data.chatId + '.userInfo']: {
-          uid: user.uid,
-          displayName: user.displayName,
-        },
-        [data.chatId + '.date']: serverTimestamp(),
-        [data.chatId + '.id']: params.id,
-      });
     }
 
     await updateDoc(doc(db, 'chats', data.chatId), {

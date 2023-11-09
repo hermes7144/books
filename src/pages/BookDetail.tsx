@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { useAuthContext } from '../context/AuthContext';
 import { useChatContext } from '../context/ChatContext';
 import { getUser } from '../api/firebase';
-// import { getUser } from '../api/firebase';
 
 export default function BookDetail() {
   const {
@@ -16,21 +15,16 @@ export default function BookDetail() {
   const { dispatch } = useChatContext();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    async function setUserInfo() {
-      try {
-        const res = await getUser(uid);
-        const writer = res.data();
+  const handleClick = async () => {
+    try {
+      const res = await getUser(uid);
+      const writer = res.data();
 
-        dispatch({ type: 'CHANGE_USER', payload: { ...writer, id } });
-      } catch (err) {
-        console.log(err);
-      }
+      dispatch({ type: 'CHANGE_USER', payload: { ...writer, id } });
+    } catch (err) {
+      console.log(err);
     }
-    setUserInfo();
-  }, [dispatch, uid, id]);
 
-  const handleClick = () => {
     if (uid === user.uid) {
       navigate(`/chats/${id}`);
     } else {
@@ -56,7 +50,6 @@ export default function BookDetail() {
                 <tr>
                   <td className='px-3'>판매가</td>
                   <td className='px-3'>
-                    {' '}
                     {isSale ? (
                       <>
                         <span className='text-xl font-bold py-2 mr-2'>{price}원</span>
@@ -76,7 +69,7 @@ export default function BookDetail() {
             <div>
               <textarea rows={4} className='w-full p-1 text-gray-800 mb-2 resize-none border-none	focus:outline-0 ' readOnly value={description}></textarea>
             </div>
-            <Button text={'채팅하기'} onClick={handleClick} />
+            {user ? <Button text={'채팅하기'} onClick={handleClick} /> : '로그인해주세요.'}
           </div>
         </div>
       </section>

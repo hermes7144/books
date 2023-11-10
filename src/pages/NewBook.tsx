@@ -4,6 +4,7 @@ import Button from '../components/ui/Button';
 import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import UseBooks from '../hooks/useBooks';
+import SellBook from '../components/SellBook';
 
 type BookListProps = {
   title: string;
@@ -89,8 +90,11 @@ export default function NewBook() {
 
   const handleSearch = async () => {
     if (!search) return;
+    setBook([]);
+
     try {
-      const res = await axios.get(`/itemSearch?Query=${search}&start=1&MaxResults=5&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
+      const res = await axios.get(`/itemSearch?Query=${search}&start=1&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
+      // const res = await axios.get(`/itemSearch?Query=${search}&start=1&MaxResults=5&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
       const item = res.data.item;
       if (item.length === 0) {
         alert('검색결과가 없습니다!');
@@ -107,83 +111,74 @@ export default function NewBook() {
   return (
     <div className='w-full text-center px-12'>
       <h2 className='text-2xl font-bold my-4'>새로운 책 등록</h2>
-      <div className='flex'>
-        <input className='my-0 flex-1 outline-none border border-gray-300 ' type='text' name='book' value={search} onChange={handleBook} onKeyDown={handleOnKeyPress} />
+      <div className='flex mb-4'>
+        <input className='my-0 flex-1 outline-none border border-gray-300 rounded-l-lg' type='text' name='book' value={search} onChange={handleBook} onKeyDown={handleOnKeyPress} />
         <Button text={'책 검색하기'} onClick={handleSearch} />
       </div>
 
-      {bookList.length > 0 &&
-        bookList.map((book) => {
-          return (
-            <div className='flex my-2 border border-gray-200' key={book.title}>
-              <img className='w-24 h-32' src={book?.cover} alt={book?.title} />
-              <section className='text-left flex-grow ml-3'>
-                <article>{book?.title}</article>
-                <article>{book?.author}</article>
-                <article>{book?.publisher}</article>
-                <article>{book?.priceStandard}</article>
-              </section>
-              <Button text={'선택'} onClick={() => selectBook(book)} />
-            </div>
-          );
-        })}
-      <br />
-      <form className='flex flex-col' onSubmit={handleSubmit}>
-        {book?.cover && (
-          <div>
-            <img className='w-50 h-60' src={book.cover} alt={book.title} />
-          </div>
-        )}
+      {bookList.length > 0 && bookList.map((book) => <SellBook book={book} handleClick={selectBook} />)}
 
-        <label className='text-brand font-bold text-left '>제목</label>
-        <input type='text' className='p-2 outline-none border border-gray-300 my-2 bg-gray-100 rounded-lg' value={book?.title} readOnly />
-        <label className='text-brand font-bold text-left '>출판사</label>
-        <input type='text' className='p-2 outline-none border border-gray-300 my-2 bg-gray-100 rounded-lg' value={book?.publisher} readOnly />
-        <label className='text-brand font-bold text-left '>정가</label>
-        <input type='number' className='p-2 outline-none border border-gray-300 my- bg-gray-100 rounded-lg' value={book?.priceStandard} readOnly />
+      <form className='' onSubmit={handleSubmit}>
+        <div className='flex flex-col md:flex-row'>
+          {book?.cover && (
+            <>
+              <div className='flex justify-center items-center basis-2/5'>
+                <img className='w-72 h-96' src={book.cover} alt={book.title} />
+              </div>
+              <div className='flex flex-col basis-3/5'>
+                <label className='text-brand font-bold text-left'>제목</label>
+                <input type='text' className='p-2 outline-none border border-gray-300 my-2 bg-gray-100 rounded-lg' value={book?.title} readOnly />
+                <label className='text-brand font-bold text-left'>출판사</label>
+                <input type='text' className='p-2 outline-none border border-gray-300 my-2 bg-gray-100 rounded-lg' value={book?.publisher} readOnly />
+                <label className='text-brand font-bold text-left'>정가</label>
+                <input type='number' className='p-2 outline-none border border-gray-300 my- bg-gray-100 rounded-lg' value={book?.priceStandard} readOnly />
 
-        <label className='text-brand font-bold text-left pt-2 border-t border-gray-200 active'>거래 방식</label>
-        <div className='flex my-2 gap-2'>
-          <button
-            type='button'
-            onClick={() => {
-              setIsSale(true);
-              giveawayForm(false);
-            }}
-            className={`py-2.5 px-5 text-sm font-bold focus:loutline-none rounded-full border border-gray-200 hover:bg-gray-100  ${isSale ? 'bg-primary text-white hover:bg-red-300' : 'bg-white text-gray-900'}`}>
-            판매하기
-          </button>
-          <button
-            type='button'
-            onClick={() => {
-              setIsSale(false);
-              giveawayForm(true);
-            }}
-            className={`py-2.5 px-5 text-sm font-bold focus:loutline-none  rounded-full border border-gray-200 hover:bg-gray-100  ${!isSale ? 'bg-primary text-white hover:bg-red-300' : 'bg-white text-gray-900'}`}>
-            나눔하기
-          </button>
+                <label className='text-brand font-bold text-left pt-2 border-t border-gray-200 active'>거래 방식</label>
+                <div className='flex my-2 gap-2'>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setIsSale(true);
+                      giveawayForm(false);
+                    }}
+                    className={`py-2.5 px-5 text-sm font-bold focus:loutline-none rounded-full border border-gray-200 hover:bg-gray-100 ${isSale ? 'bg-primary text-white hover:bg-red-300' : 'bg-white text-gray-900'}`}>
+                    판매하기
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setIsSale(false);
+                      giveawayForm(true);
+                    }}
+                    className={`py-2.5 px-5 text-sm font-bold focus:loutline-none  rounded-full border border-gray-200 hover:bg-gray-100  ${!isSale ? 'bg-primary text-white hover:bg-red-300' : 'bg-white text-gray-900'}`}>
+                    나눔하기
+                  </button>
+                </div>
+
+                <label className='text-brand font-bold text-left' htmlFor='quality'>
+                  품질
+                </label>
+                <select id='quality' name='quality' className='border border-gray-300 my-2 p-2.5 rounded-lg block w-full ' onChange={handleSelect} value={quality} required>
+                  <option value=''>-선택-</option>
+                  {options && options.map((option) => <option key={option.value}>{option.descrption}</option>)}
+                </select>
+                <label className='text-brand font-bold text-left' htmlFor='price'>
+                  판매가
+                </label>
+                <div className='relative mb-6'>
+                  <div className='absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none'>￦</div>
+                  <input type='number' id='price' name='price' className='border border-gray-300 focus:border-2 focus:border-gray-900 rounded-lg block w-full pl-10 p-2.5' value={book?.price} onChange={handleChange} disabled={!isSale} placeholder='가격을 입력해주세요.' required />
+                </div>
+
+                <label className='text-brand font-bold text-left' htmlFor='description'>
+                  기타
+                </label>
+                <textarea id='description' name='description' rows={2} className='block w-full p-1 text-gray-800 bg-white border border-gray-200 mb-2 resize-none rounded-lg' placeholder='참고사항이나 특이사항을 입력해주세요.' value={book?.description} onChange={handleChange} required></textarea>
+                <Button text={isUploading ? '업로드 중...' : '제품 등록하기'} disabled={isUploading} />
+              </div>
+            </>
+          )}
         </div>
-
-        <label className='text-brand font-bold text-left' htmlFor='quality'>
-          품질
-        </label>
-        <select id='quality' name='quality' className='border border-gray-300 my-2 p-2.5 rounded-lg block w-full ' onChange={handleSelect} value={quality} required>
-          <option value=''>-선택-</option>
-          {options && options.map((option) => <option key={option.value}>{option.descrption}</option>)}
-        </select>
-        <label className='text-brand font-bold text-left' htmlFor='price'>
-          판매가
-        </label>
-        <div className='relative mb-6'>
-          <div className='absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none'>￦</div>
-          <input type='number' id='price' name='price' className='border border-gray-300 focus:border-2 focus:border-gray-900 rounded-lg block w-full pl-10 p-2.5' value={book?.price} onChange={handleChange} disabled={!isSale} placeholder='가격을 입력해주세요.' required />
-        </div>
-
-        <label className='text-brand font-bold text-left' htmlFor='description'>
-          자세한 설명
-        </label>
-        <textarea id='description' name='description' rows={4} className='block w-full p-1 text-gray-800 bg-white border border-gray-200 mb-2 resize-none rounded-lg' placeholder='신뢰할 수 있는 거래를 위해 자세히 적어주세요.' value={book?.description} onChange={handleChange} required></textarea>
-        <Button text={isUploading ? '업로드 중...' : '제품 등록하기'} disabled={isUploading} />
       </form>
     </div>
   );

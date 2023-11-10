@@ -5,7 +5,11 @@ module.exports = {
     extend: {
       colors: {
         primary: '#f75866'
-      }
+      },
+      backgroundImage: {
+        // banner: `url('../public/images/banner.jpg')`,
+        avatar: `url('/public/images/avatar.svg')`
+      },
     },
   },
   plugins: [],

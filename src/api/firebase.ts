@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { v4 as uuid } from 'uuid';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, getFirestore, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, getFirestore, orderBy, query, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -45,8 +45,9 @@ export function onUserStateChange(callback: Function) {
 }
 
 export async function getBooks() {
-  const querySnapshot = await getDocs(collection(db, 'books'));
-  return querySnapshot;
+  const booksRef = collection(db, 'books');
+
+  return await getDocs(query(booksRef, orderBy('createdDate', 'desc')));
 }
 export async function addNewBook(book: any) {
   const id = uuid();

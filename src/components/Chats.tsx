@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import { useChatContext } from '../context/ChatContext';
 import { useNavigate, useParams } from 'react-router-dom';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../api/firebase';
 
 export default function Chats() {
   const { uid } = useAuthContext();
@@ -10,5 +12,37 @@ export default function Chats() {
   const navigate = useNavigate();
   const params = useParams();
 
-  return <div className='bg-slate-600'>{chats && chats.map((chat) => {})}</div>;
+  useEffect(() => {
+    const getChats = () => {
+      const unsub = onSnapshot(doc(db, 'userChats', uid), (doc) => {
+        const chatsData = Object.entries(doc.data()).filter((chat) => chat[1].id === params.id);
+        setChats(chatsData);
+      });
+
+      return () => {
+        unsub();
+      };
+    };
+    uid && getChats();
+  }, [uid, params.id]);
+
+  const handleClick = (user) => {
+    dispatch({ type: 'CHANGE_USER', payload: user });
+    navigate(`/chat/${params.id}`);
+  };
+
+  return (
+    <div className='bg-slate-600'>
+      {chats &&
+        chats.map((chat) => (
+          <div className='p-2.5 flex items-center gap-2.5 text-white cursor-pointer' key={chat[0]} onClick={() => handleClick(chat[1].userInfo)}>
+            <div></div>
+            <div>
+              <span>{chat[1].userInfo.displayName}</span>
+              <span>{chat[1].lastMessage.text}</span>
+            </div>
+          </div>
+        ))}
+    </div>
+  );
 }

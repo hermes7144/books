@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import { useChatContext } from '../context/ChatContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../api/firebase';
+import { db, getBook } from '../api/firebase';
 
 export default function Chats() {
   const { uid } = useAuthContext();
-  const { dispatch } = useChatContext();
+  const { dispatch, data } = useChatContext();
   const [chats, setChats] = useState<any>([]);
   const navigate = useNavigate();
   const params = useParams();
+  const {
+    state: { book },
+  } = useLocation();
 
   useEffect(() => {
     const getChats = () => {
@@ -26,9 +29,9 @@ export default function Chats() {
     uid && getChats();
   }, [uid, params.id]);
 
-  const handleClick = (user) => {
+  const handleClick = async (user) => {
     dispatch({ type: 'CHANGE_USER', payload: user });
-    navigate(`/chat/${params.id}`);
+    navigate(`/chat/${params.id}`, { state: { book } });
   };
 
   return (

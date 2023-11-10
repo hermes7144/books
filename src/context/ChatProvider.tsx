@@ -17,6 +17,7 @@ export default function ChatProvider({ children }) {
       case 'CHANGE_USER': {
         return {
           otherUser: action.payload,
+          id: params.id,
           chatId: params.id + (action.payload.uid > user.uid ? action.payload.uid + user.uid : user.uid + action.payload.uid),
         };
       }

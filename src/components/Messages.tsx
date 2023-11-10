@@ -18,5 +18,9 @@ export default function Messages() {
     };
   }, [data.chatId]);
 
-  return <div className='bg-slate-400 overflow-y-auto h-[calc(100vh_-_190px)]'>{messages.length > 0 && messages.map((message) => <Message key={message.id} message={message} />)}</div>;
+  return (
+    <>
+      <div className='bg-white overflow-y-auto h-[calc(100vh_-_290px)]'>{messages.length > 0 && messages.map((message) => <Message key={message.id} message={message} />)}</div>
+    </>
+  );
 }

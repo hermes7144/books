@@ -49,6 +49,11 @@ export async function getBooks() {
 
   return await getDocs(query(booksRef, orderBy('createdDate', 'desc')));
 }
+
+export async function getBook(id) {
+  return getDoc(doc(db, 'books', id));
+}
+
 export async function addNewBook(book: any) {
   const id = uuid();
   return await setDoc(doc(db, 'books', id), {

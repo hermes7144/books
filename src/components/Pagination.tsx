@@ -13,16 +13,16 @@ export default function Pagination({ total, limit, page, setPage }) {
   }
 
   return (
-    <nav>
-      <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+    <nav className='flex justify-center gap-1'>
+      <button className='border-none rounded-lg p-2 m-0 bg-gray-300 hover:bg-red-400 text-white' onClick={() => setPage(page - 1)} disabled={page === 1}>
         &lt;
       </button>
       {pageNumbers.map((pageNumber) => (
-        <button key={pageNumber} onClick={() => setPage(pageNumber)} className={page === pageNumber ? 'text-red-300' : undefined}>
+        <button key={pageNumber} onClick={() => setPage(pageNumber)} className={'border-none rounded-lg p-2 m-0  hover:bg-red-400 text-white ' + (page === pageNumber ? 'bg-red-500' : 'bg-gray-300')}>
           {pageNumber}
         </button>
       ))}
-      <button onClick={() => setPage(page + 1)} disabled={page === numPages}>
+      <button className='border-none rounded-lg p-2 m-0 bg-gray-300 hover:bg-red-40 text-white' onClick={() => setPage(page + 1)} disabled={page === numPages}>
         &gt;
       </button>
     </nav>

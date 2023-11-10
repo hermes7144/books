@@ -9,6 +9,7 @@ import User from '../components/User';
 export default function BookDetail() {
   const {
     state: {
+      book,
       book: { id, uid, cover, title, priceStandard, price, quality, description, isSale, author, publisher, pubDate },
     },
   } = useLocation();
@@ -34,16 +35,20 @@ export default function BookDetail() {
     }
 
     if (uid === user.uid) {
-      navigate(`/chats/${id}`);
+      navigate(`/chats/${id}`, { state: { book } });
     } else {
-      navigate(`/chat/${id}`);
+      navigate(`/chat/${id}`, { state: { book } });
     }
   };
   return (
     <>
       <section className='w-full p-4'>
-        <h2 className='text-3xl font-bold py-2  '>{title}</h2>
-        <p className='text-gray-700 border-b border-gray-200 whitespace-pre mb-10'>{`${author}   ${publisher}    ${pubDate}`}</p>
+        <h2 className='text-3xl font-bold py-2'>{title}</h2>
+        <div className='flex flex-col md:flex-row gap-2 border-b border-gray-300 mb-10'>
+          <span className='text-gray-700'>{`${author}`}</span>
+          <span className='text-gray-700'>{`${publisher}`}</span>
+          <span className='text-gray-700'>{`${pubDate}`}</span>
+        </div>
         <div className='flex flex-col md:flex-row'>
           <div className='w-full flex justify-center basis-2/5 mb-10'>
             <img className='w-60 h-80' src={cover} alt={title} />

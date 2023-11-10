@@ -32,8 +32,9 @@ export default function NewBook() {
   const [isUploading, setIsUploading] = useState(false);
   const [isSale, setIsSale] = useState(true);
   const [page, setPage] = useState(1);
+  const limit = 5;
+  const offset = (page - 1) * limit;
 
-  const [address, setAddress] = useState('');
   const [totalResults, setTotalResults] = useState(0);
 
   const { addBook } = UseBooks();
@@ -93,26 +94,13 @@ export default function NewBook() {
     );
   };
 
-  useEffect(() => {
-    async function test() {
-      console.log('page', page);
-
-      const res = await axios.get(address + `&start=${page}`);
-      const item = res.data.item;
-
-      setBookList(item);
-    }
-    address && test();
-  }, [address, page]);
-
   const handleSearch = async () => {
     if (!search) return;
     setBook([]);
     setPage(1);
 
-    setAddress(`/itemSearch?Query=${search}&Cover=Big&&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
     try {
-      const res = await axios.get(`/itemSearch?Query=${search}&Cover=Big&&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
+      const res = await axios.get(`/itemSearch?Query=${search}&Cover=Big&&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}&MaxResults=50`);
 
       setTotalResults(res.data.totalResults > 100 ? 100 : res.data.totalResults);
 
@@ -138,7 +126,7 @@ export default function NewBook() {
         <Button text={'책 검색하기'} onClick={handleSearch} />
       </div>
 
-      {bookList.length > 0 && bookList.map((book) => <SellBook book={book} handleClick={selectBook} />)}
+      {bookList.length > 0 && bookList.slice(offset, offset + limit).map((book) => <SellBook book={book} handleClick={selectBook} />)}
       {bookList.length > 0 && <Pagination total={totalResults} limit={10} page={page} setPage={setPage} />}
 
       <form onSubmit={handleSubmit}>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '../components/ui/Button';
 import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import UseBooks from '../hooks/useBooks';
 import SellBook from '../components/SellBook';
+import Pagination from '../components/Pagination';
 
 type BookListProps = {
   title: string;
@@ -30,6 +31,10 @@ export default function NewBook() {
   const [book, setBook] = useState<any>();
   const [isUploading, setIsUploading] = useState(false);
   const [isSale, setIsSale] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const [address, setAddress] = useState('');
+  const [totalResults, setTotalResults] = useState(0);
 
   const { addBook } = UseBooks();
 
@@ -88,14 +93,31 @@ export default function NewBook() {
     );
   };
 
+  useEffect(() => {
+    async function test() {
+      console.log('page', page);
+
+      const res = await axios.get(address + `&start=${page}`);
+      const item = res.data.item;
+
+      setBookList(item);
+    }
+    address && test();
+  }, [address, page]);
+
   const handleSearch = async () => {
     if (!search) return;
     setBook([]);
+    setPage(1);
 
+    setAddress(`/itemSearch?Query=${search}&Cover=Big&&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
     try {
-      const res = await axios.get(`/itemSearch?Query=${search}&start=1&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
-      // const res = await axios.get(`/itemSearch?Query=${search}&start=1&MaxResults=5&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
+      const res = await axios.get(`/itemSearch?Query=${search}&Cover=Big&&${process.env.REACT_APP_ALADIN_ITEM_SEARCH}`);
+
+      setTotalResults(res.data.totalResults > 100 ? 100 : res.data.totalResults);
+
       const item = res.data.item;
+
       if (item.length === 0) {
         alert('검색결과가 없습니다!');
         return;
@@ -117,13 +139,14 @@ export default function NewBook() {
       </div>
 
       {bookList.length > 0 && bookList.map((book) => <SellBook book={book} handleClick={selectBook} />)}
+      {bookList.length > 0 && <Pagination total={totalResults} limit={10} page={page} setPage={setPage} />}
 
-      <form className='' onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className='flex flex-col md:flex-row'>
           {book?.cover && (
             <>
               <div className='flex justify-center items-center basis-2/5'>
-                <img className='w-72 h-96' src={book.cover} alt={book.title} />
+                <img className='w-72 h-96 bg-cover' src={book.cover} alt={book.title} />
               </div>
               <div className='flex flex-col basis-3/5'>
                 <label className='text-brand font-bold text-left'>제목</label>

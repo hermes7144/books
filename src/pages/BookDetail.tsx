@@ -57,6 +57,9 @@ export default function BookDetail() {
             {writer && <User user={writer} />}
             <div className='flex flex-col'>
               <table className='border-b border-t border-gray-300 my-2'>
+                <colgroup>
+                  <col className='w-20' />
+                </colgroup>
                 <tbody>
                   <tr>
                     <td>새상품</td>
@@ -68,7 +71,7 @@ export default function BookDetail() {
                       {isSale ? (
                         <>
                           <span className='text-xl font-bold py-2 mr-2'>{price}원</span>
-                          <span>({((price / priceStandard) * 100).toFixed(2)}% 할인)</span>
+                          <span>({(100 - (price / priceStandard) * 100).toFixed(2)}% 할인)</span>
                         </>
                       ) : (
                         <p className='text-2xl font-bold py-2'>나눔</p>

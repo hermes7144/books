@@ -8,7 +8,10 @@ export default function SellBook({ book, handleClick }) {
       <section className='text-left flex-grow ml-3'>
         <article>{book.title}</article>
         <article>{book.author}</article>
-        <article>{book.publisher}</article>
+        <div className='flex gap-2'>
+          <article>{book.publisher}</article>|<article>{book.pubDate}</article>
+        </div>
+
         <article>{book.priceStandard}</article>
       </section>
       <Button text={'선택'} onClick={() => handleClick(book)} />

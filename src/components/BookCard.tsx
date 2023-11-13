@@ -10,7 +10,7 @@ export default function BookCard({ book, book: { id, cover, title, priceStandard
       onClick={() => {
         navigate(`/books/${id}`, { state: { book } });
       }}
-      className='rounded-lg shadow-md cursor-pointer flex'>
+      className='rounded-lg shadow-md hover:shadow-lg cursor-pointer border-t flex'>
       <img className='w-full max-w-[80px] h-[120px] p-1' src={cover} alt={title} />
       <div className=' px-1 text-lg overflow-hidden w-full flex flex-col justify-between'>
         <h3 className='line-clamp-2'>{title}</h3>

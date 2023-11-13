@@ -19,14 +19,11 @@ export default function BookChats() {
 
   useEffect(() => {
     const getChats = () => {
-      const unsub = onSnapshot(doc(db, 'userChats', uid), (doc) => {
+      onSnapshot(doc(db, 'userChats', uid), (doc) => {
         const chatsData = Object.entries(doc.data()).filter((chat) => chat[1].id === params.id);
+
         setChats(chatsData);
       });
-
-      return () => {
-        unsub();
-      };
     };
     uid && getChats();
   }, [uid, params.id]);

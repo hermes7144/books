@@ -1,8 +1,6 @@
 import React from 'react';
 
 export default function DateDifference({ date }: any) {
-  console.log('date', date);
-
   const currentTime: Date = new Date(); // 예시 날짜 및 시간 1
   const date2: Date = new Date(date); // 예시 날짜 및 시간 2
 

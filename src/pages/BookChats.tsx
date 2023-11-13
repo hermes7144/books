@@ -36,8 +36,6 @@ export default function BookChats() {
     navigate(`/chat/${params.id}`, { state: { book } });
   };
 
-  console.log(chats);
-
   return (
     <div>
       <div className='flex items-center gap-4 border-b py-3'>

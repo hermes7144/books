@@ -85,7 +85,7 @@ export default function Input() {
         onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
         value={text}
       />
-      <button className={`w-16 p-1 mr-1 text-white ${isInputEmpty ? 'bg-gray-400' : 'bg-primary'}`} onClick={handleSend} disabled={true}>
+      <button className={`w-16 p-1 mr-1 text-white ${isInputEmpty ? 'bg-gray-400' : 'bg-primary'}`} onClick={handleSend} disabled={isInputEmpty}>
         전송
       </button>
     </div>

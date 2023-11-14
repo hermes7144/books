@@ -58,14 +58,12 @@ export default function BookDetail() {
   };
   return (
     <>
-      <section className='w-full p-4'>
-        <div>
-          <h2 className='text-2xl font-bold line-clamp-2'>{title}</h2>
-        </div>
-        <div className='flex gap-2 border-b border-gray-300 my-5'>
+      <section className='w-full p-2'>
+        <h2 className='text-2xl font-bold line-clamp-2'>{title}</h2>
+        <div className='flex gap-2 border-b border-gray-300 my-1'>
           <span className='text-gray-700'>{`${author} | ${publisher} | ${pubDate}`}</span>
         </div>
-        <div className='flex flex-col md:flex-row gap-4'>
+        <div className='flex flex-col md:flex-row gap-2'>
           <div className='w-full flex basis-1/5 justify-center'>
             <img className='w-40 h-60 md:w-60 md:h-80 border border-gray-100 shadow-sm' src={cover} alt={title} />
           </div>
@@ -77,7 +75,7 @@ export default function BookDetail() {
                     <div className='h-8 w-8 bg-avatar' />
                     <div className='flex flex-col'>
                       <span className='font-medium'>{writer.displayName}</span>
-                      {<span className='text-sm text-gray-400'>{writer.neighborhood}</span>}
+                      <span className='text-sm text-gray-400'>{writer.neighborhood}</span>
                     </div>
                   </div>
                 )}
@@ -87,10 +85,6 @@ export default function BookDetail() {
                       <col className='w-20' />
                     </colgroup>
                     <tbody>
-                      <tr>
-                        <td>새상품</td>
-                        <td>{priceStandard}원</td>
-                      </tr>
                       <tr>
                         <td>판매가</td>
                         <td>

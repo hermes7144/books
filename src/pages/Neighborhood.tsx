@@ -44,29 +44,31 @@ export default function Neighborhood() {
   }
 
   return (
-    <div className='p-4 h-[calc(100vh_-_150px)]'>
-      <Map
-        center={{
-          lat: location?.latitude ? location.latitude : 33,
-          lng: location?.longitude ? location.longitude : 33,
-        }}
-        style={{ width: '100%', height: '100%' }}
-        level={3}
-        onClick={(_t, mouseEvent) =>
-          setPosition({
-            lat: mouseEvent.latLng.getLat(),
-            lng: mouseEvent.latLng.getLng(),
-          })
-        }>
-        <MapMarker // 마커를 생성합니다
-          position={{ lng: position.lng, lat: position.lat }}
-        />
-      </Map>
+    <div className='p-4'>
+      <div className='h-[600px] md:h-[700px]'>
+        <Map
+          center={{
+            lat: location?.latitude ? location.latitude : 33,
+            lng: location?.longitude ? location.longitude : 33,
+          }}
+          style={{ width: '100%', height: '100%' }}
+          level={3}
+          onClick={(_t, mouseEvent) =>
+            setPosition({
+              lat: mouseEvent.latLng.getLat(),
+              lng: mouseEvent.latLng.getLng(),
+            })
+          }>
+          <MapMarker // 마커를 생성합니다
+            position={{ lng: position.lng, lat: position.lat }}
+          />
+        </Map>
+      </div>
       <section className='mt-5 '>
         <article className='flex gap-2 text-lg'>
           <p>마커를 움직여 동네를 설정해주세요.</p>
         </article>
-        <article className='flex justify-between items-center'>
+        <article className='flex justify-between items'>
           <div className='flex gap-4'>
             <p className='font-semibold'>내 동네</p>
             <span className='text-brand font-bold'>{neighborhood}</span>

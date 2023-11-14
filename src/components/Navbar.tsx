@@ -19,7 +19,7 @@ export default function Navbar() {
   return (
     <header className='flex justify-between border-b border-gray-300 p-2'>
       <nav className='flex items-end gap-4 font-semibold'>
-        <Link to='/' className='text-4xl text-primary'>
+        <Link to='/' className='text-4xl text-primary hidden md:block'>
           DNBS
         </Link>
         {user && <Link to='/neighborhood'>{user?.neighborhood ? user.neighborhood : '동네인증'}</Link>}

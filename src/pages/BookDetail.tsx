@@ -4,7 +4,6 @@ import Button from '../components/ui/Button';
 import { useAuthContext } from '../context/AuthContext';
 import { useChatContext } from '../context/ChatContext';
 import { db, getUser } from '../api/firebase';
-import User from '../components/User';
 import Toast from '../components/ui/Toast';
 import { doc, onSnapshot } from 'firebase/firestore';
 

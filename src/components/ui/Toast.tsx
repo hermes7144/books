@@ -12,7 +12,7 @@ export default function Toast({ message, onClose }) {
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [onClose]);
 
   return <div className={`fixed left-36 md:left-1/2 bottom-1/2 bg-gray-800 text-white px-4 py-2 rounded-md transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0'}`}>{message}</div>;
 }

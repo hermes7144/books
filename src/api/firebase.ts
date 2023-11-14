@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { v4 as uuid } from 'uuid';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, getFirestore, orderBy, query, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, getFirestore, orderBy, query, setDoc, where } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -44,10 +44,25 @@ export function onUserStateChange(callback: Function) {
   });
 }
 
-export async function getBooks() {
+export async function getBooks(search) {
+  const booksRef = collection(db, 'books');
+  console.log(search.length);
+
+  if (search.length > 0) {
+    return await getDocs(query(booksRef, where('title', '>=', search), where('title', '<=', search + '\uf8ff')));
+  } else {
+    return await getDocs(query(booksRef, orderBy('createdDate', 'desc')));
+  }
+}
+
+export async function getSearchBooks(id) {
+  return getDoc(doc(db, 'books', id));
+}
+
+export async function getUserSellBooks(uid) {
   const booksRef = collection(db, 'books');
 
-  return await getDocs(query(booksRef, orderBy('createdDate', 'desc')));
+  return await getDocs(query(booksRef, where('uid', '==', uid)));
 }
 
 export async function getBook(id) {

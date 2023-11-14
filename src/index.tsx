@@ -13,6 +13,9 @@ import BookDetail from './pages/BookDetail';
 import ProtectedRoute from './pages/ProtectedRoute';
 import BookChats from './pages/BookChats';
 import BookChat from './pages/BookChat';
+import Setting from './pages/Setting';
+import SellBook from './pages/SellBook';
+import SearchBook from './pages/SearchBook';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +26,7 @@ const router = createBrowserRouter([
       { index: true, path: '/', element: <Home /> },
       { path: '/books', element: <Allbooks /> },
       { path: '/books/:id', element: <BookDetail /> },
+      { path: '/books/search', element: <SearchBook /> },
       {
         path: '/books/new',
         element: (
@@ -52,6 +56,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <BookChat />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/setting',
+        element: (
+          <ProtectedRoute>
+            <Setting />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/setting/sell',
+        element: (
+          <ProtectedRoute>
+            <SellBook />
           </ProtectedRoute>
         ),
       },

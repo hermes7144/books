@@ -70,7 +70,7 @@ export default function BookDetail() {
           <div className='basis-4/5'>
             <div className='flex flex-col justify-between h-full'>
               <div>
-                {writer && <User user={writer} />}
+                {/* {writer && <User user={writer} showNeighborHood={true} />} */}
                 <div className='flex flex-col'>
                   <table className='border-b border-t border-gray-300 my-2'>
                     <colgroup>
@@ -110,7 +110,7 @@ export default function BookDetail() {
                   </div>
                 </div>
               </div>
-              {user ? <Button text={uid === user.uid ? '대화중인 채팅방' : '채팅하기'} onClick={handleClick} /> : <Button text={'Login to buy'} onClick={login} />}
+              {user ? <Button text={uid === user.uid ? '대화중인 채팅방' : '채팅하기'} onClick={handleClick} /> : <Button text='Login to buy' onClick={login} />}
             </div>
           </div>
         </div>

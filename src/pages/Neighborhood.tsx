@@ -69,7 +69,7 @@ export default function Neighborhood() {
           <span className='text-brand font-bold'>{neighborhood}</span>
         </article>
         <article className='flex gap-4'>
-          <Button text={'동네 저장하기'} onClick={handleSubmit} />
+          <Button text='동네 저장하기' onClick={handleSubmit} />
         </article>
       </section>
     </div>

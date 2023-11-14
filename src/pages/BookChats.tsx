@@ -4,8 +4,8 @@ import { useChatContext } from '../context/ChatContext';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../api/firebase';
-import { BsChevronLeft } from 'react-icons/bs';
 import DateDifference from '../components/ui/DateDifference';
+import BackButton from '../components/ui/BackButton';
 
 export default function BookChats() {
   const { uid } = useAuthContext();
@@ -35,10 +35,7 @@ export default function BookChats() {
 
   return (
     <div>
-      <div className='flex items-center gap-4 border-b py-3'>
-        <BsChevronLeft className='cursor-pointer text-2xl' onClick={() => navigate(-1)} />
-        <span className='text-xl font-bold'>채팅목록</span>
-      </div>
+      <BackButton text='채팅목록' />
       {chats &&
         chats.map((chat) => (
           <div className='p-2.5 flex justify-between cursor-pointer border-b' key={chat[0]} onClick={() => handleClick(chat[1].userInfo)}>

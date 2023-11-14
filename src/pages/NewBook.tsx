@@ -34,10 +34,11 @@ export default function NewBook() {
   const [page, setPage] = useState(1);
   const limit = 5;
   const offset = (page - 1) * limit;
-
   const [totalResults, setTotalResults] = useState(0);
-
   const { addBook } = UseBooks();
+
+  const [isNoBook, setIsNoBook] = useState(false);
+  const [noBookText, setNoBookText] = useState('');
 
   const navigate = useNavigate();
 
@@ -84,8 +85,6 @@ export default function NewBook() {
 
     setIsUploading(true);
 
-    console.log('book', book);
-
     addBook.mutate(
       { ...book, quality, isSale, neighborhood: user.neighborhood, uid: user.uid },
       {
@@ -108,13 +107,14 @@ export default function NewBook() {
 
       const item = res.data.item;
 
-      if (item.length === 0) {
-        alert('검색결과가 없습니다!');
-        return;
-      }
-
       if (item.length > 0) {
         setBookList(item);
+        setIsNoBook(false);
+      } else {
+        setBook([]);
+        setBookList([]);
+        setIsNoBook(true);
+        setNoBookText(search);
       }
     } catch (error) {
       console.error('An error occurred:', error);
@@ -130,6 +130,13 @@ export default function NewBook() {
 
       {bookList.length > 0 && bookList.slice(offset, offset + limit).map((book) => <SellBook book={book} handleClick={selectBook} />)}
       {bookList.length > 0 && <Pagination total={totalResults} limit={10} page={page} setPage={setPage} />}
+      {isNoBook && (
+        <div className='p-2 text-left leading-6'>
+          <span className='font-bold text-primary'>'{noBookText}'</span>에 대한 검색 결과가 없습니다.
+          <br /> - 입력한 검색어의 철자 또는 띄어쓰기가 정확한지 다시 한번 확인해 주세요.
+          <br /> - 검색어의 단어 수를 줄이거나, 보다 일반적인 검색어를 사용하여 검색해 보세요.
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col md:flex-row'>

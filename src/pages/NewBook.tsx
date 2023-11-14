@@ -193,7 +193,7 @@ export default function NewBook() {
                 <label className='text-brand font-bold text-left' htmlFor='description'>
                   기타
                 </label>
-                <textarea id='description' name='description' rows={4} className='block w-full p-1 text-gray-800 bg-white border border-gray-200 mb-2 resize-none rounded-lg' placeholder='참고사항이나 특이사항을 입력해주세요.' value={book?.description} onChange={handleChange} required></textarea>
+                <textarea id='description' name='description' rows={4} className='block w-full p-1 text-gray-800 bg-white border border-gray-200 mb-2 resize-none rounded-lg' placeholder='참고사항이나 특이사항을 입력해주세요.' value={book?.description} onChange={handleChange}></textarea>
                 <Button text={isUploading ? '업로드 중...' : '제품 등록하기'} disabled={isUploading} />
               </div>
             </>

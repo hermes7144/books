@@ -59,18 +59,28 @@ export default function BookDetail() {
   return (
     <>
       <section className='w-full p-4'>
-        <h2 className='text-3xl font-bold py-2'>{title}</h2>
-        <div className='flex gap-2 border-b border-gray-300 mb-10'>
+        <div>
+          <h2 className='text-2xl font-bold line-clamp-2'>{title}</h2>
+        </div>
+        <div className='flex gap-2 border-b border-gray-300 my-5'>
           <span className='text-gray-700'>{`${author} | ${publisher} | ${pubDate}`}</span>
         </div>
         <div className='flex flex-col md:flex-row gap-4'>
           <div className='w-full flex basis-1/5 justify-center'>
-            <img className='w-60 h-80 border border-gray-100 shadow-sm' src={cover} alt={title} />
+            <img className='w-40 h-60 md:w-60 md:h-80 border border-gray-100 shadow-sm' src={cover} alt={title} />
           </div>
           <div className='basis-4/5'>
             <div className='flex flex-col justify-between h-full'>
               <div>
-                {/* {writer && <User user={writer} showNeighborHood={true} />} */}
+                {writer && (
+                  <div className='flex items-center shrink-0 gap-2'>
+                    <div className='h-8 w-8 bg-avatar' />
+                    <div className='flex flex-col'>
+                      <span className='font-medium'>{writer.displayName}</span>
+                      {<span className='text-sm text-gray-400'>{writer.neighborhood}</span>}
+                    </div>
+                  </div>
+                )}
                 <div className='flex flex-col'>
                   <table className='border-b border-t border-gray-300 my-2'>
                     <colgroup>

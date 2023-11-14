@@ -45,7 +45,7 @@ export default function Neighborhood() {
 
   return (
     <div className='p-4'>
-      <div className='h-[600px] md:h-[700px]'>
+      <div className='h-[600px] md:h-[740px]'>
         <Map
           center={{
             lat: location?.latitude ? location.latitude : 33,
@@ -59,9 +59,7 @@ export default function Neighborhood() {
               lng: mouseEvent.latLng.getLng(),
             })
           }>
-          <MapMarker // 마커를 생성합니다
-            position={{ lng: position.lng, lat: position.lat }}
-          />
+          <MapMarker position={{ lng: position.lng, lat: position.lat }} />
         </Map>
       </div>
       <section className='mt-5 '>

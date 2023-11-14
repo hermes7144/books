@@ -25,7 +25,7 @@ export default function Navbar() {
         {user && <Link to='/neighborhood'>{user?.neighborhood ? user.neighborhood : '동네인증'}</Link>}
       </nav>
       <nav className='flex items-center gap-4 font-semibold'>
-        <div className='hidden md:block'>
+        <div className='hidden md:flex'>
           <input type='text' className='border' onChange={handleBook} value={search} />
           <BsSearch className='text-2xl cursor-pointer' onClick={handleClick} />
         </div>

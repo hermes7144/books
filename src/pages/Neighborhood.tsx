@@ -44,7 +44,7 @@ export default function Neighborhood() {
   }
 
   return (
-    <div className='p-4 h-[calc(100vh_-_130px)]'>
+    <div className='p-4 h-[calc(100vh_-_150px)]'>
       <Map
         center={{
           lat: location?.latitude ? location.latitude : 33,
@@ -62,13 +62,15 @@ export default function Neighborhood() {
           position={{ lng: position.lng, lat: position.lat }}
         />
       </Map>
-      <section className='mt-5 flex justify-between items-center'>
+      <section className='mt-5 '>
         <article className='flex gap-2 text-lg'>
           <p>마커를 움직여 동네를 설정해주세요.</p>
-          <p className='font-semibold'>내 동네</p>
-          <span className='text-brand font-bold'>{neighborhood}</span>
         </article>
-        <article className='flex gap-4'>
+        <article className='flex justify-between items-center'>
+          <div className='flex gap-4'>
+            <p className='font-semibold'>내 동네</p>
+            <span className='text-brand font-bold'>{neighborhood}</span>
+          </div>
           <Button text='동네 저장하기' onClick={handleSubmit} />
         </article>
       </section>

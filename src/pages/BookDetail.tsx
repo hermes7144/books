@@ -42,8 +42,6 @@ export default function BookDetail() {
       onSnapshot(doc(db, 'userChats', uid), (doc) => {
         const chats = Object.entries(doc.data()).filter((chat) => chat[1].id === params.id);
 
-        console.log('chats.length', chats.length);
-
         if (chats.length === 0) {
           setShowToast(true);
         } else {

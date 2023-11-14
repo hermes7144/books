@@ -124,8 +124,8 @@ export default function NewBook() {
     <div className='w-full text-center px-12'>
       <h2 className='text-2xl font-bold my-4'>새로운 책 등록</h2>
       <div className='flex mb-4'>
-        <input className='my-0 flex-1 outline-none border border-gray-300 rounded-l-lg' type='text' name='book' value={search} onChange={handleBook} onKeyDown={handleOnKeyPress} />
-        <Button text={'책 검색하기'} onClick={handleSearch} />
+        <input className='my-0 flex-1 pl-3 outline-none border border-gray-300 rounded-l-lg' type='text' name='book' value={search} onChange={handleBook} onKeyDown={handleOnKeyPress} />
+        <Button text={'검색'} onClick={handleSearch} />
       </div>
 
       {bookList.length > 0 && bookList.slice(offset, offset + limit).map((book) => <SellBook book={book} handleClick={selectBook} />)}

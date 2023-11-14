@@ -22,7 +22,7 @@ export default function BookCard({ book, book: { id, cover, title, priceStandard
             <div>
               {isSale ? (
                 <>
-                  <span>{price}원</span>
+                  <span>{price.toLocaleString()}원</span>
                   <span className='text-sm'>({(100 - (price / priceStandard) * 100).toFixed(2)}% 할인)</span>
                 </>
               ) : (

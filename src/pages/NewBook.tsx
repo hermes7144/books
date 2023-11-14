@@ -121,7 +121,7 @@ export default function NewBook() {
     }
   };
   return (
-    <div className='w-full text-center px-12'>
+    <div className='w-full text-center px-2'>
       <h2 className='text-2xl font-bold my-4'>새로운 책 등록</h2>
       <div className='flex mb-4'>
         <input className='my-0 flex-1 pl-3 outline-none border border-gray-300 rounded-l-lg' type='text' name='book' value={search} onChange={handleBook} onKeyDown={handleOnKeyPress} />

@@ -1,20 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Allbooks from './Allbooks';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { useAuthContext } from '../context/AuthContext';
+import Toast from '../components/ui/Toast';
 
 export default function Home() {
   const { user } = useAuthContext();
+  const [showToast, setShowToast] = useState(false);
+  const navigate = useNavigate();
 
+  const handleClick = () => {
+    if (user?.neighborhood) {
+      navigate('/books/new');
+    } else {
+      setShowToast(true);
+    }
+  };
+
+  const handleToastClose = () => {
+    setShowToast(false);
+  };
   return (
     <>
       <Allbooks />
       {user && (
-        <Link to='/books/new' className='fixed bottom-0 right-0 m-8 bg-primary rounded-full p-4 cursor-pointer text-white'>
+        <div onClick={handleClick} className='fixed bottom-0 right-0 m-8 bg-primary rounded-full p-4 cursor-pointer text-white'>
           <BsFillPencilFill />
-        </Link>
+        </div>
       )}
+
+      {showToast && <Toast message='동네를 먼저 인증해주세요.' onClose={handleToastClose} />}
     </>
   );
 }

@@ -18,7 +18,7 @@ export default function BookDetail() {
   const { dispatch } = useChatContext();
   const navigate = useNavigate();
   const [writer, setWriter] = useState<any>();
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState<any>();
   const params = useParams();
 
   useEffect(() => {
@@ -42,13 +42,17 @@ export default function BookDetail() {
         const chats = Object.entries(doc.data()).filter((chat) => chat[1].id === params.id);
 
         if (chats.length === 0) {
-          setShowToast(true);
+          setShowToast('채팅한 이웃이 없어요.');
         } else {
           navigate(`/chats/${id}`, { state: { book } });
         }
       });
     } else {
-      navigate(`/chat/${id}`, { state: { book } });
+      if (user?.neighborhood) {
+        navigate(`/chat/${id}`, { state: { book } });
+      } else {
+        setShowToast('동네를 인증해주세요.');
+      }
     }
   };
 
@@ -117,8 +121,7 @@ export default function BookDetail() {
             </div>
           </div>
         </div>
-
-        {showToast && <Toast message='채팅한 이웃이 없어요.' onClose={handleToastClose} />}
+        {showToast && <Toast message={showToast} onClose={handleToastClose} />}
       </section>
     </>
   );

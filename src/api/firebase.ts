@@ -93,6 +93,10 @@ export async function setUserInfo(user: any) {
         displayName: user.displayName,
         email: user.email,
       });
+    }
+
+    const res2 = await getDoc(doc(db, 'userChats', user.uid));
+    if (!res2.exists()) {
       await setDoc(doc(db, 'userChats', user.uid), {});
     }
   } catch (err) {

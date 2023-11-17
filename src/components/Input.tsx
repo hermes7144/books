@@ -63,15 +63,15 @@ export default function Input() {
       }),
     });
 
-    await updateDoc(doc(db, 'userChats', user.uid), {
-      [data.chatId + '.lastMessage']: { text },
-      [data.chatId + '.date']: new Date().toISOString(),
-    });
+    // await updateDoc(doc(db, 'userChats', user.uid), {
+    //   [data.chatId + '.lastMessage']: { text },
+    //   [data.chatId + '.date']: new Date().toISOString(),
+    // });
 
-    await updateDoc(doc(db, 'userChats', data.otherUser.uid), {
-      [data.chatId + '.lastMessage']: { text },
-      [data.chatId + '.date']: new Date().toISOString(),
-    });
+    // await updateDoc(doc(db, 'userChats', data.otherUser.uid), {
+    //   [data.chatId + '.lastMessage']: { text },
+    //   [data.chatId + '.date']: new Date().toISOString(),
+    // });
 
     setText('');
   };

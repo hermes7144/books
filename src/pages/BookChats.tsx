@@ -45,11 +45,11 @@ export default function BookChats() {
                 <div className='flex items-center gap-2'>
                   <span className='text-lg font-bold'>{chat[1].userInfo.displayName}</span>
                   <span className='text-gray-400 text-sm'>
-                    {chat[1].userInfo.neighborhood}ˑ
-                    <DateDifference date={chat[1].date} />
+                    {chat[1].userInfo.neighborhood}
+                    {/* ˑ<DateDifference date={chat[1].date} /> */}
                   </span>
                 </div>
-                <span>{chat[1].lastMessage.text}</span>
+                {/* <span>{chat[1].text}</span> */}
               </div>
             </div>
             <img className='h-14 w-14' src={chat[1].cover} alt='item' />

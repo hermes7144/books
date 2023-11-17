@@ -6,6 +6,7 @@ import { useChatContext } from '../context/ChatContext';
 import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { getChats } from '../api/firebase';
 import { useLocation, useParams } from 'react-router-dom';
+import { BiSend, BiSolidSend } from 'react-icons/bi';
 
 export default function Input() {
   const params = useParams(); // test
@@ -77,17 +78,10 @@ export default function Input() {
   };
 
   return (
-    <div className='h-10 bg-white flex items-center justify-between border border-gray-300 rounded-md'>
-      <input
-        type='text'
-        className='w-full border-none outline-none'
-        onChange={(e) => setText(e.target.value)}
-        onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
-        value={text}
-      />
-      <button className={`w-16 p-1 mr-1 text-white ${isInputEmpty ? 'bg-gray-400' : 'bg-primary'}`} onClick={handleSend} disabled={isInputEmpty}>
-        전송
-      </button>
+    <div className='h-10 bg-white flex items-center justify-between border border-gray-300 rounded-md p-2'>
+      <input type='text' className='w-full border-none outline-none' onChange={(e) => setText(e.target.value)} onKeyDown={handleOnKeyPress} placeholder='메세지 보내기' value={text} />
+
+      <div className='text-3xl'>{isInputEmpty ? <BiSend className='text-gray-300' /> : <BiSolidSend className='text-primary cursor-pointer hover:brightness-110' onClick={handleSend} />}</div>
     </div>
   );
 }

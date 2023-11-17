@@ -21,7 +21,7 @@ export default function Message({ message: { text, senderId, date } }: any) {
     <div ref={ref} className={`flex p-4 gap-1 items-end ${senderId === uid ? 'flex-row-reverse' : undefined}`}>
       <div>{senderId !== uid && <div className='w-10 h-10 rounded-full object-cover bg-avatar' />}</div>
       <div className={`flex max-w-3/4 ${senderId === uid ? 'flex-row-reverse' : undefined}`}>
-        <p className={`py-2 px-1 ${senderId === uid ? 'bg-red-400 text-white' : 'bg-gray-300'}`} style={{ borderRadius: senderId === uid ? '10px 0 10px 10px' : '0 10px 10px 10px' }}>
+        <p className={`p-2 ${senderId === uid ? 'bg-red-400 text-white' : 'bg-gray-300'}`} style={{ borderRadius: senderId === uid ? '10px 0 10px 10px' : '0 10px 10px 10px' }}>
           {text}
         </p>
       </div>

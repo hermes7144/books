@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import AuthProvider from './context/AuthProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ChatProvider from './context/ChatProvider';
+import Footer from './components/Footer';
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ function App() {
         <ChatProvider>
           <Navbar />
           <Outlet />
+          <Footer />
         </ChatProvider>
       </AuthProvider>
     </QueryClientProvider>

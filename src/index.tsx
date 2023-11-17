@@ -16,6 +16,7 @@ import BookChat from './pages/BookChat';
 import Setting from './pages/Setting';
 import SellBook from './pages/SellBook';
 import SearchBook from './pages/SearchBook';
+import AllChats from './pages/AllChats';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Neighborhood />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/chats',
+        element: (
+          <ProtectedRoute>
+            <AllChats />
           </ProtectedRoute>
         ),
       },

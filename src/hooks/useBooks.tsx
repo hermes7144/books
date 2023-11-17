@@ -5,6 +5,7 @@ export default function useBooks(uid?, search?) {
   const queryClient = useQueryClient();
 
   const booksQuery = useQuery({ queryKey: ['books'], queryFn: getBooks, staleTime: 5000 * 60 });
+
   const searchBooks = useQuery({ queryKey: ['books', search], queryFn: () => getBooks(search), staleTime: 5000 * 60 });
 
   const sellBooks = useQuery({ queryKey: ['sellBooks', uid], queryFn: () => getUserSellBooks(uid), staleTime: 5000 * 60 });

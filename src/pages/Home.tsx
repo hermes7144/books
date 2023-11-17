@@ -25,7 +25,7 @@ export default function Home() {
     <>
       <Allbooks />
       {user && (
-        <div onClick={handleClick} className='fixed bottom-0 right-0 m-8 bg-primary rounded-full p-4 cursor-pointer text-white'>
+        <div onClick={handleClick} className='fixed bottom-0 right-0 mb-16 mr-10 bg-primary rounded-full p-4 cursor-pointer text-white hover:brightness-110'>
           <BsFillPencilFill />
         </div>
       )}

@@ -5,21 +5,15 @@ import { useAuthContext } from '../context/AuthContext';
 import { useChatContext } from '../context/ChatContext';
 import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { getChats } from '../api/firebase';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { BiSend, BiSolidSend } from 'react-icons/bi';
 
-export default function Input() {
+export default function Input({ book }) {
   const params = useParams(); // test
   const { user } = useAuthContext();
   const { data } = useChatContext();
   const [text, setText] = useState('');
   const isInputEmpty = text.trim() === ''; // 입력 값이 공백만 있는지 확인
-
-  const {
-    state: {
-      book: { cover },
-    },
-  } = useLocation();
 
   const handleOnKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -42,7 +36,7 @@ export default function Input() {
           neighborhood: data.otherUser.neighborhood,
         },
         [data.chatId + '.id']: params.id,
-        [data.chatId + '.cover']: cover,
+        [data.chatId + '.cover']: book.cover,
       });
       await updateDoc(doc(db, 'userChats', data.otherUser.uid), {
         [data.chatId + '.userInfo']: {
@@ -51,7 +45,7 @@ export default function Input() {
           neighborhood: user.neighborhood,
         },
         [data.chatId + '.id']: params.id,
-        [data.chatId + '.cover']: cover,
+        [data.chatId + '.cover']: book.cover,
       });
     }
 

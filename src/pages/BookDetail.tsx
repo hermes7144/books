@@ -6,6 +6,8 @@ import { useChatContext } from '../context/ChatContext';
 import { db, getUser } from '../api/firebase';
 import Toast from '../components/ui/Toast';
 import { doc, onSnapshot } from 'firebase/firestore';
+import BackButton from '../components/ui/BackButton';
+import { GoHome } from 'react-icons/go';
 
 export default function BookDetail() {
   const {
@@ -44,12 +46,12 @@ export default function BookDetail() {
         if (chats.length === 0) {
           setShowToast('채팅한 이웃이 없어요.');
         } else {
-          navigate(`/chats/${id}`, { state: { book } });
+          navigate(`/chats/${id}`);
         }
       });
     } else {
       if (user?.neighborhood) {
-        navigate(`/chat/${id}`, { state: { book } });
+        navigate(`/chat/${id}`);
       } else {
         setShowToast('동네를 인증해주세요.');
       }
@@ -61,6 +63,8 @@ export default function BookDetail() {
   };
   return (
     <>
+      <BackButton text={<GoHome className='text-2xl' />} />
+
       <section className='w-full p-2'>
         <h2 className='text-2xl font-bold line-clamp-2'>{title}</h2>
         <div className='flex gap-2 border-b border-gray-300 my-1'>

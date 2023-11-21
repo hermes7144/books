@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Messages from '../components/Messages';
 import Input from '../components/Input';
 import { useChatContext } from '../context/ChatContext';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import BackButton from '../components/ui/BackButton';
 import { getBook } from '../api/firebase';
 
@@ -14,7 +14,6 @@ export default function BookChat() {
   useEffect(() => {
     async function bookQuery(id) {
       const res = (await getBook(id)).data();
-      console.log(res);
 
       setBook(res);
     }

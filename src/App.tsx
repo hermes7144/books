@@ -13,7 +13,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ChatProvider>
-          <div className='pb-24'>
+          <div className='pb-12'>
             <Navbar />
             <Outlet />
           </div>
